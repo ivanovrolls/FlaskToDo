@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="/add" method="POST">
+        <input type="text" name="task" placeholder="Enter a new task" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        {% for todo in todos %} <!-- for each task in todo list -->
+            <li class="todo">
+                {{ todo.task }} <!-- display the task -->
+                <a href="/delete/{{ todo.id }}">Delete ❌</a> <!--an option to delete it-->
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
