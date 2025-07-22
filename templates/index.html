@@ -25,6 +25,7 @@
                     {% endif %}
                     
                     <a href="{{ url_for('delete', id=todo.id) }}">[Delete ❌]</a>
+                    <a href="{{ url_for('edit', id=todo.id) }}">[Edit 📝]</a>
                 </li>
             {% endfor %}
         </ul>

@@ -43,6 +43,22 @@ def complete(id):
     conn.close()
     return redirect(url_for('index'))
 
+@app.route('/edit/<int:id>')
+def edit(id):
+    conn = get_db_connection()
+    todo = conn.execute('SELECT * FROM todos WHERE id = ?', (id,)).fetchone()
+    conn.close()
+    return render_template('edit.html', todo=todo)
+
+@app.route('/update/<int:id>', methods=['POST'])
+def update(id):
+    new_task = request.form['task']
+    conn = get_db_connection()
+    conn.execute('UPDATE todos SET task = ? WHERE id = ?', (new_task, id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     conn = get_db_connection()
     conn.execute('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, task TEXT, completed INTEGER DEFAULT 0)')
