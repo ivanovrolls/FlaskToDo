@@ -62,3 +62,8 @@ li {
     border-radius: 8px;
     color: #333;
 }
+
+.completed {
+    text-decoration: line-through;
+    color: #888;
+}

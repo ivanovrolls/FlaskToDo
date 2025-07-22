@@ -20,7 +20,7 @@ def add():
     task = request.form['task']
     if task:
         conn = get_db_connection()
-        conn.execute('INSERT INTO todos (task) VALUES (?)', (task,))
+        conn.execute('INSERT INTO todos (task, completed) VALUES (?,?)', (task,0))
         conn.commit()
         conn.close()
     return redirect(url_for('index'))
@@ -33,8 +33,18 @@ def delete(id):
     conn.close()
     return redirect(url_for('index'))
 
+@app.route('/complete/<int:id>')
+def complete(id):
+    conn = get_db_connection()
+    current = conn.execute('SELECT completed FROM todos WHERE id = ?', (id,)).fetchone()
+    new_value = 0 if current['completed'] else 1
+    conn.execute('UPDATE todos SET completed = ? WHERE id = ?', (new_value, id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, task TEXT)')
+    conn.execute('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, task TEXT, completed INTEGER DEFAULT 0)')
     conn.close()
     app.run(debug=True)
