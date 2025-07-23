@@ -61,6 +61,6 @@ def update(id):
 
 if __name__ == '__main__':
     conn = get_db_connection()
-    conn.execute('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, task TEXT, completed INTEGER DEFAULT 0)')
+    conn.execute('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, task TEXT, completed INTEGER DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)')
     conn.close()
     app.run(debug=True)

@@ -19,13 +19,17 @@
                 <li>
                     <span class="{% if todo.completed %}completed{% endif %}">{{ todo.task }}</span>
                     {% if todo['completed'] %}
+                        <br>
                         <a href="{{ url_for('complete', id=todo.id) }}">[Undo ↩️]</a>
                     {% else %}
+                        <br>
                         <a href="{{ url_for('complete', id=todo.id) }}">[Mark as complete ✅]</a>  
                     {% endif %}
                     
                     <a href="{{ url_for('delete', id=todo.id) }}">[Delete ❌]</a>
                     <a href="{{ url_for('edit', id=todo.id) }}">[Edit 📝]</a>
+                    <br>
+                    <small style="color: #777;">Added on: {{ todo.created_at[:16].replace('T', ' ') }}</small>    
                 </li>
             {% endfor %}
         </ul>
